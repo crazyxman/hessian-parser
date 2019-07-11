@@ -14,6 +14,11 @@
       "name": "James Harris",
       "email": "james.harris@icecave.com.au",
       "homepage": "https://github.com/jmalloc"
+    },
+    {
+      "name": "Jinxi Wang",
+      "email": "crazyxman01@gmail.com",
+      "homepage": "https://github.com/crazyxman"
     }
   ],
   "require": {

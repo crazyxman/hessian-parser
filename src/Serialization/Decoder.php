@@ -19,6 +19,7 @@ class Decoder
         $this->stack = new Stack();
         $this->classDefinitions = new Vector();
         $this->references = new Vector();
+        $this->multiValue = [];
 
         $this->reset();
     }
@@ -68,10 +69,13 @@ class Decoder
         if ($this->currentContext->state !== DecoderState::COMPLETE) {
             return false;
         }
-
-        $value = $this->value;
+        if(empty($this->multiValue)) {
+            $value = $this->value;
+        } else {
+            $this->multiValue[] = $this->value;
+            $value = $this->multiValue;
+        }
         $this->reset();
-
         return true;
     }
 
@@ -153,7 +157,8 @@ class Decoder
             case DecoderState::CLASS_DEFINITION_FIELD:
                 return $this->handleBeginStringStrict($byte);
             case DecoderState::COMPLETE:
-                throw new DecodeException('Decoder has not been reset.');
+                $this->multiValue[] = $this->value;
+                $this->reset();
         }
 
          if (!$this->handleBegin($byte)) {
@@ -1356,4 +1361,5 @@ class Decoder
     private $stack;
     private $currentContext;
     private $value;
+    private $multiValue;
 }
