@@ -14,3 +14,9 @@ $str = base64_decode($str);
 $dp = new DubboParser();
 $data = $ps->getData($str);
 ```
+### Usage
+```php
+$decoder = new Decoder;
+$decoder->feed($data);
+return $decoder->finalize();
+```
