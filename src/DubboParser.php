@@ -11,7 +11,11 @@ class DubboParser
     public function getData($data)
     {
         $decoder = new Decoder;
-        $decoder->feed($this->removeHeaderForDubbo($data));
+        $body = $this->removeHeaderForDubbo($data);
+        if($body === ''){
+            return null;
+        }
+        $decoder->feed($body);
         return $decoder->finalize();
     }
 
